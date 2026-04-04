@@ -27,7 +27,9 @@ def find_email(
     full_name: str,
     company_domain: Optional[str] = None,
     company_name: Optional[str] = None,
+    custom: Optional[Dict[str, Any]] = None,
     country_code: Optional[str] = None,
+    retrieve_gender: Optional[bool] = None,
     webhook: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Start a single email search. Returns a dict with an 'id' to poll for results."""
@@ -36,10 +38,14 @@ def find_email(
         body["company_domain"] = company_domain
     if company_name:
         body["company_name"] = company_name
-    if country_code or webhook:
-        settings: Dict[str, str] = {}
+    if custom is not None:
+        body["custom"] = custom
+    if country_code or webhook or retrieve_gender is not None:
+        settings: Dict[str, Any] = {}
         if country_code:
             settings["country_code"] = country_code
+        if retrieve_gender is not None:
+            settings["retrieve_gender"] = retrieve_gender
         if webhook:
             settings["webhook"] = webhook
         body["settings"] = settings
@@ -55,6 +61,7 @@ def find_emails(
     api_key: str,
     searches: List[Dict[str, Any]],
     country_code: Optional[str] = None,
+    retrieve_gender: Optional[bool] = None,
     webhook: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Start a bulk email search. Returns a dict with a 'batchId' to poll for results."""
@@ -69,10 +76,12 @@ def find_emails(
             for s in searches
         ],
     }
-    if country_code or webhook:
-        settings: Dict[str, str] = {}
+    if country_code or webhook or retrieve_gender is not None:
+        settings: Dict[str, Any] = {}
         if country_code:
             settings["country_code"] = country_code
+        if retrieve_gender is not None:
+            settings["retrieve_gender"] = retrieve_gender
         if webhook:
             settings["webhook"] = webhook
         body["settings"] = settings
