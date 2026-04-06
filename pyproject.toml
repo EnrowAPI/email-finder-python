@@ -35,4 +35,4 @@ dependencies = ["httpx>=0.24"]
 [project.urls]
 Homepage = "https://enrow.io"
 Documentation = "https://docs.enrow.io"
-Repository = "https://github.com/enrow/email-finder-python"
+Repository = "https://github.com/EnrowAPI/email-finder-python"
